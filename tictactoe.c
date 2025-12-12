@@ -17,26 +17,11 @@ void computerMove();
 char checkWinner();
 int checkFreeSpaces();
 void printWinner(char winner);
-
-void printBoard(){
-    printf(" %c | %c | %c \n",board[0][0], board[0][1],board[0][2]);
-    printf("---|---|---\n");
-    printf(" %c| %c| %c\n",board[1][0], board[1][1],board[1][2]);
-    printf("---|---|---\n");
-    printf(" %c| %c| %c\n",board[2][0], board[2][1],board[2][2]);
-    printf("---|---|---\n\n");
-}
-void resetBoard(){
-    int i,j;
-    for(i=0; i<3;i++){
-        for(j=0;j<3;j++){
-          board[i][j]=' ';  
-        }
-    }
-}
+void printBoard();
+void resetBoard();
 
 int main(){
-
+    int c;
     char winner=' ';
     char response = ' ';
     srand(time(0));
@@ -64,6 +49,7 @@ int main(){
 
         printf("Do you want to play again (Y/N): ");
         scanf(" %c", &response);
+        while ((c = getchar()) != '\n' && c != EOF);
         response = toupper(response);
     }while(response == 'Y');
 
@@ -71,14 +57,41 @@ int main(){
     return 0;
 }
 
-void playerMove(){
+void printBoard(){
+    printf(" %c | %c | %c \n",board[0][0], board[0][1],board[0][2]);
+    printf("---|---|---\n");
+    printf(" %c | %c | %c \n",board[1][0], board[1][1],board[1][2]);
+    printf("---|---|---\n");
+    printf(" %c | %c | %c \n",board[2][0], board[2][1],board[2][2]);
+    printf("\n");
+}
+
+void resetBoard(){
     int i,j;
+    for(i=0; i<3;i++){
+        for(j=0;j<3;j++){
+          board[i][j]=' ';  
+        }
+    }
+}
+
+void playerMove(){
+    int i,j, c;
+
     do{
         printf("Enter row  #(1-3): ");
-        scanf("%d", &i);
+        if(scanf("%d", &i)!=1){
+            while ((c = getchar()) != '\n' && c != EOF);
+            printf("Invalid input. Try again.\n");
+        }
         i--;
+
         printf("Enter column  #(1-3): ");
-        scanf("%d", &j);
+        if(scanf("%d", &j) != 1){
+            while ((c = getchar()) != '\n' && c != EOF);
+            printf("Invalid input. Try again.\n");
+            continue;
+        }
         j--;
 
         if(i>2 || i<0 || j>2 || j<0 || board[i][j] != ' '){
@@ -86,9 +99,9 @@ void playerMove(){
         }
         else{
             board[i][j]=PLAYER;
-            break;
         }
     }while(1);
+    
 }
 
 void computerMove()
@@ -109,21 +122,21 @@ char checkWinner(){
     //Check rows
     for(i=0;i<3;i++)
     {
-        if(board[i][0] == board[i][1] && board[i][0] == board[i][2]){
+        if(board[i][0] == board[i][1] && board[i][0] == board[i][2] && board[i][0] != ' '){
             return board[i][0];
         }
     }
     //Check columns
     for(i=0;i<3;i++){
-         if(board[0][i] == board[1][i] && board[0][i] == board[2][i]){
+         if(board[0][i] == board[1][i] && board[0][i] == board[2][i] && board[0][i] != ' '){
             return board[0][i];
         }       
     }
     //Check Diagonals
-    if(board[0][0] == board[1][1] && board[1][1]==board[2][2]){
+    if(board[0][0] == board[1][1] && board[1][1]==board[2][2] && board[1][1] != ' ' ){
         return board[0][0];
     }
-    if(board[0][2] == board[1][1] && board[1][1]==board[2][0]){
+    if(board[0][2] == board[1][1] && board[1][1]==board[2][0] && board[1][1] != ' ' ){
         return board[0][2];
     }
 
