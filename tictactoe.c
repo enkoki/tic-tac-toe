@@ -1,5 +1,7 @@
 // Player VS Computer
 
+// MSYS
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
