@@ -9,5 +9,6 @@ Trying to learn more about git by doing random ass projects 💔
 git clone https://github.com/enkoki/tic-tac-toe
 ```
 🤝 Contributing
+
 Would appreciate any improvements to this code. 
 
